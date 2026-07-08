@@ -1,0 +1,71 @@
+.neu-button {
+  background: var(--bg-color);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-distance) var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-dark),
+              -var(--shadow-distance) -var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.neu-button-primary {
+  color: var(--primary-color);
+}
+
+.neu-button-success {
+  color: var(--success-color);
+}
+
+.neu-button-warning {
+  color: var(--warning-color);
+}
+
+.neu-button-error {
+  color: var(--error-color);
+}
+
+.neu-button-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.neu-button-md {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+.neu-button-lg {
+  padding: 16px 32px;
+  font-size: 18px;
+}
+
+.neu-button-full-width {
+  width: 100%;
+}
+
+.neu-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.neu-button-primary:hover:not(:disabled) {
+  color: var(--primary-hover);
+}
+
+.neu-button:active:not(:disabled) {
+  box-shadow: inset var(--shadow-small-distance) var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-dark),
+              inset -var(--shadow-small-distance) -var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-light);
+  transform: translateY(0);
+}
+
+.neu-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: var(--text-light);
+}

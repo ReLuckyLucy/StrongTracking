@@ -1,0 +1,54 @@
+// 颜色变量
+$bg-color: #e0e5ec;
+$text-color: #4a5568;
+$text-light: #718096;
+$primary-color: #667eea;
+$primary-hover: #5568d3;
+$success-color: #48bb78;
+$warning-color: #ed8936;
+$error-color: #f56565;
+
+// 阴影颜色
+$shadow-light: #ffffff;
+$shadow-dark: #a3b1c6;
+
+// 阴影参数
+$shadow-distance: 8px;
+$shadow-blur: 16px;
+$shadow-small-distance: 4px;
+$shadow-small-blur: 8px;
+
+// 圆角
+$border-radius: 16px;
+$border-radius-sm: 8px;
+$border-radius-lg: 24px;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// 字体大小
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+$font-size-2xl: 24px;
+$font-size-3xl: 32px;
+
+// Z-index层级
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// 断点
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

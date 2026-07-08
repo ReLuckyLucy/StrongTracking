@@ -1,0 +1,27 @@
+# 依赖
+node_modules/
+
+# 构建输出
+dist/
+
+# 环境变量
+.env
+
+# 日志
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 测试覆盖率
+coverage/
+
+# 临时文件
+*.tmp
+*.temp

@@ -1,0 +1,208 @@
+.exercise-selector {
+  margin-bottom: 24px;
+}
+
+.selector-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+/* 自定义项目输入 */
+.custom-exercise-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.custom-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 15px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  box-shadow: inset 3px 3px 6px var(--shadow-dark),
+              inset -3px -3px 6px var(--shadow-light);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+  box-shadow: inset 4px 4px 8px var(--shadow-dark),
+              inset -4px -4px 8px var(--shadow-light);
+}
+
+.custom-input::placeholder {
+  color: var(--text-light);
+  opacity: 0.6;
+}
+
+.custom-add-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 3px 3px 6px var(--shadow-dark),
+              -3px -3px 6px var(--shadow-light);
+  white-space: nowrap;
+}
+
+.custom-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: 1px 1px 3px var(--shadow-dark),
+              -1px -1px 3px var(--shadow-light);
+}
+
+.custom-add-btn:not(:disabled):active {
+  box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2),
+              inset -2px -2px 4px rgba(255,255,255,0.1);
+  transform: scale(0.97);
+}
+
+/* 自定义项目标签 */
+.custom-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.custom-remove-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.custom-remove-btn:active {
+  transform: scale(0.9);
+}
+
+.preset-remove-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.preset-remove-btn:active {
+  transform: scale(0.9);
+}
+
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercise-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--bg-color);
+  box-shadow: var(--shadow-small-distance) var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-dark),
+              -var(--shadow-small-distance) -var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-light);
+}
+
+.exercise-item.selected {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(85, 104, 211, 0.1) 100%);
+  color: var(--primary-color);
+}
+
+.exercise-item.custom-item {
+  cursor: default;
+}
+
+.exercise-item.custom-item .exercise-name {
+  margin-left: 0;
+}
+
+.exercise-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.exercise-name {
+  flex: 1;
+  font-size: 16px;
+  margin-left: 32px;
+}
+
+.custom-item .exercise-name {
+  margin-left: 0;
+}
+
+.exercise-checkmark {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: var(--shadow-small-distance) var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-dark),
+              -var(--shadow-small-distance) -var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-light);
+}
+
+.selected-count {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.empty-hint {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-light);
+  font-size: 15px;
+  opacity: 0.6;
+}

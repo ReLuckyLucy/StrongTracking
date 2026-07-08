@@ -1,0 +1,60 @@
+.progress-chart {
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  background: var(--bg-color);
+  box-shadow: var(--shadow-distance) var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-dark),
+              -var(--shadow-distance) -var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-light);
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+.chart-tooltip {
+  background: var(--bg-color);
+  padding: 12px;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-distance) var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-dark),
+              -var(--shadow-distance) -var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-light);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.tooltip-date {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.tooltip-item {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.progress-chart-empty {
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: var(--border-radius);
+  background: var(--bg-color);
+  box-shadow: var(--shadow-distance) var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-dark),
+              -var(--shadow-distance) -var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-light);
+}
+
+.progress-chart-empty p {
+  margin: 8px 0;
+  color: var(--text-light);
+}
+
+.empty-hint {
+  font-size: 14px;
+  color: var(--text-light);
+}

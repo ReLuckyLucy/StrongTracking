@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: fitness_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: fitness_db
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - fitness_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 30s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fitness_backend
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: fitness_db
+      SESSION_SECRET: ${SESSION_SECRET}
+      APP_PASSWORD: ${APP_PASSWORD}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - fitness_network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/health"]
+      timeout: 10s
+      retries: 5
+      interval: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fitness_frontend
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      REACT_APP_API_URL: /api
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - fitness_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  fitness_network:
+    driver: bridge

@@ -1,0 +1,26 @@
+.neu-card {
+  background: var(--bg-color);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--shadow-distance) var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-dark),
+              -var(--shadow-distance) -var(--shadow-distance)
+              var(--shadow-blur) var(--shadow-light);
+  transition: all 0.2s ease;
+}
+
+.neu-card:hover {
+  transform: translateY(-2px);
+}
+
+.neu-card.clickable {
+  cursor: pointer;
+}
+
+.neu-card.clickable:active {
+  box-shadow: inset var(--shadow-small-distance) var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-dark),
+              inset -var(--shadow-small-distance) -var(--shadow-small-distance)
+              var(--shadow-small-blur) var(--shadow-light);
+  transform: translateY(0);
+}

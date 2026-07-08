@@ -1,0 +1,52 @@
+.body-part-selector {
+  margin-bottom: 24px;
+}
+
+.selector-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+.body-part-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .body-part-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.body-part-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.body-part-card.selected {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  color: white;
+}
+
+.body-part-card.selected .body-part-icon {
+  filter: brightness(0) invert(1);
+}
+
+.body-part-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.body-part-name {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
