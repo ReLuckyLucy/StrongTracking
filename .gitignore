@@ -1,0 +1,12 @@
+node_modules
+dist
+.env
+*.pyc
+__pycache__
+.pytest_cache
+*.egg-info
+.DS_Store
+Thumbs.db
+*.log
+.env.local
+.env.production

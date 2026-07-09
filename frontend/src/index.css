@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-200;
+  }
+}
+
+/* react-calendar-heatmap overrides */
+.react-calendar-heatmap text {
+  @apply fill-gray-500 dark:fill-gray-400;
+  font-size: 10px;
+}
+.react-calendar-heatmap .color-empty {
+  fill: #e5e7eb;
+}
+.dark .react-calendar-heatmap .color-empty {
+  fill: #1f2937;
+}
+.react-calendar-heatmap .color-scale-1 { fill: #bbf7d0; }
+.react-calendar-heatmap .color-scale-2 { fill: #4ade80; }
+.react-calendar-heatmap .color-scale-3 { fill: #16a34a; }
+.react-calendar-heatmap .color-scale-4 { fill: #14532d; }
