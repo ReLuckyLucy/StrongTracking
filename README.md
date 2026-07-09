@@ -6,7 +6,7 @@
 
 <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/ReLuckyLucy/StrongTracking">
-    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ReLuckyLucy/StrongTrackinge">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ReLuckyLucy/StrongTracking">
     <img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/ReLuckyLucy/StrongTracking?include_prereleases">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ReLuckyLucy/StrongTracking">
 </p>
