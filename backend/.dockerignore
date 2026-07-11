@@ -1,7 +1,6 @@
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!gradle/wrapper/gradle-wrapper.properties
+target/
+.mvn/wrapper/maven-wrapper.jar
+data/
 src/test/
 *.iml
 .idea/

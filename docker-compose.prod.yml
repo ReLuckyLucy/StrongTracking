@@ -1,23 +1,4 @@
 services:
-  db:
-    image: postgres:15-alpine
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-fituser}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fitpass}
-      POSTGRES_DB: ${POSTGRES_DB:-fitdb}
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fituser} -d ${POSTGRES_DB:-fitdb}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
   backend:
     image: ghcr.io/reluckylucy/strongtracking-backend:3.0
     ports:
@@ -25,15 +6,11 @@ services:
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-fitdb}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-fituser}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-fitpass}
       APP_JWT_SECRET: ${SECRET_KEY:-change-me-to-a-random-secret-key}
       APP_JWT_EXPIRATION_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-1440}
       APP_ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
-    depends_on:
-      db:
-        condition: service_healthy
+    volumes:
+      - sqlitedata:/app/data
     restart: unless-stopped
 
   frontend:
@@ -45,4 +22,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  pgdata:
+  sqlitedata:
