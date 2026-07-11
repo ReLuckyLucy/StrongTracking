@@ -1,6 +1,10 @@
-node_modules
-dist
-__pycache__
-*.pyc
-.git
-.env
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+src/test/
+*.iml
+.idea/
+*.ipr
+*.iws
+out/

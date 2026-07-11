@@ -1,15 +1,26 @@
-FROM python:3.12-slim
-
+# Stage 1: Build
+FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
-# Install system deps
-RUN apt-get update && apt-get install -y --no-install-recommends gcc libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Copy Gradle wrapper and build files first for dependency caching
+COPY gradlew build.gradle.kts settings.gradle.kts ./
+COPY gradle/ gradle/
+RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
 
-# Install Python deps
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy source and build
+COPY src/ src/
+RUN ./gradlew bootJar --no-daemon -x test
 
-COPY . .
+# Stage 2: Runtime
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+
+RUN addgroup -S spring && adduser -S spring -G spring
+
+COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8000
+
+USER spring:spring
+
+ENTRYPOINT ["java", "-XX:+UseZGC", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]

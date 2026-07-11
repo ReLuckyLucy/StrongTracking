@@ -19,19 +19,18 @@ services:
     restart: unless-stopped
 
   backend:
-    image: ghcr.io/reluckylucy/strongtracking-backend:2.0
-    command: >
-      sh -c "alembic upgrade head &&
-             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    image: ghcr.io/reluckylucy/strongtracking-backend:3.0
     ports:
       - "8000:8000"
     env_file:
       - .env
     environment:
-      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://fituser:fitpass@db:5432/fitdb}
-      SECRET_KEY: ${SECRET_KEY:-change-me-to-a-random-secret-key}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-1440}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-fitdb}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-fituser}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-fitpass}
+      APP_JWT_SECRET: ${SECRET_KEY:-change-me-to-a-random-secret-key}
+      APP_JWT_EXPIRATION_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-1440}
+      APP_ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
     depends_on:
       db:
         condition: service_healthy
