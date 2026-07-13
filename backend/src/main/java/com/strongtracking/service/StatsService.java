@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -81,10 +80,10 @@ public class StatsService {
 
         if (!dates.isEmpty()) {
             // Current streak
-            if (ChronoUnit.DAYS.between(dates.get(0), today) <= 1) {
+            if (today.toEpochDay() - dates.get(0).toEpochDay() <= 1) {
                 currentStreak = 1;
                 for (int i = 1; i < dates.size(); i++) {
-                    if (ChronoUnit.DAYS.between(dates.get(i), dates.get(i - 1)) == 1) {
+                    if (dates.get(i - 1).toEpochDay() - dates.get(i).toEpochDay() == 1) {
                         currentStreak++;
                     } else {
                         break;
@@ -95,7 +94,7 @@ public class StatsService {
             // Longest streak
             int streak = 1;
             for (int i = 1; i < dates.size(); i++) {
-                if (ChronoUnit.DAYS.between(dates.get(i), dates.get(i - 1)) == 1) {
+                if (dates.get(i - 1).toEpochDay() - dates.get(i).toEpochDay() == 1) {
                     streak++;
                 } else {
                     longestStreak = Math.max(longestStreak, streak);

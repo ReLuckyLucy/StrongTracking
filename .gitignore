@@ -11,9 +11,15 @@ Thumbs.db
 .env.local
 .env.production
 
-# Java / Gradle
-backend/.gradle/
-backend/build/
+# Java / Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
 *.class
 *.jar
-!backend/gradle/wrapper/gradle-wrapper.jar
+!backend/.mvn/wrapper/maven-wrapper.jar
+*.db
+
+# IDE
+.idea/
+*.iml
+backend/data/

@@ -1,0 +1,20 @@
+#!/bin/sh
+# Maven Wrapper startup script
+
+# Resolve the directory of this script
+PRGDIR=$(cd "$(dirname "$0")" && pwd)
+
+# Use JAVA_HOME if set
+if [ -n "$JAVA_HOME" ]; then
+  JAVACMD="$JAVA_HOME/bin/java"
+else
+  JAVACMD="java"
+fi
+
+exec "$JAVACMD" \
+  $MAVEN_OPTS \
+  $MAVEN_DEBUG_OPTS \
+  -classpath "$PRGDIR/.mvn/wrapper/maven-wrapper.jar" \
+  "-Dmaven.multiModuleProjectDirectory=$PRGDIR" \
+  "-Dmaven.wrapper.properties=$PRGDIR/.mvn/wrapper/maven-wrapper.properties" \
+  org.apache.maven.wrapper.MavenWrapperMain "$@"

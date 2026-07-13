@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,7 +23,7 @@ public class JwtTokenProvider {
 
     public String createToken(UUID userId) {
         Instant now = Instant.now();
-        Instant expiry = now.plus(jwtConfig.expirationMinutes(), ChronoUnit.MINUTES);
+        Instant expiry = now.plusSeconds(jwtConfig.expirationMinutes() * 60);
 
         return Jwts.builder()
                 .subject(userId.toString())
