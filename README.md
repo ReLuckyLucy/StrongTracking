@@ -1,260 +1,201 @@
+# Strong Tracking
 
-
-
-<h1 align="center">Strong Tracking </h1>
-<h1 align="center">一个全栈健身追踪应用，帮助用户记录训练、追踪进度、查看个人最佳记录。</h1>
-
-<p align="center">
-    <img alt="GitHub" src="https://img.shields.io/github/license/ReLuckyLucy/StrongTracking">
-    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ReLuckyLucy/StrongTracking">
-    <img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/ReLuckyLucy/StrongTracking?include_prereleases">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ReLuckyLucy/StrongTracking">
-</p>
-<p align="center">
-    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ReLuckyLucy/StrongTracking">
-    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/ReLuckyLucy/StrongTracking">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/ReLuckyLucy/StrongTracking?style=social">
-</p>
-
-## 🧱 项目架构
-
-```
-strong-tracking/
-├── backend/                  # Python FastAPI 后端
-│   ├── app/
-│   │   ├── main.py           # 应用入口，CORS 配置，路由注册，管理员种子
-│   │   ├── config.py         # 环境变量配置
-│   │   ├── database.py       # 异步 SQLAlchemy 引擎
-│   │   ├── models/
-│   │   │   └── models.py     # User / Exercise / Workout / WorkoutSet ORM 模型
-│   │   ├── schemas/
-│   │   │   └── schemas.py    # Pydantic 请求/响应模型
-│   │   ├── services/
-│   │   │   └── auth.py       # bcrypt 密码哈希、JWT 令牌、认证依赖
-│   │   └── api/
-│   │       ├── auth.py       # 注册 / 登录 / 获取当前用户
-│   │       ├── exercises.py  # 动作库 CRUD
-│   │       ├── workouts.py   # 训练记录 CRUD
-│   │       ├── stats.py      # 进度图表、热力图、概览统计
-│   │       └── admin.py      # 管理员：用户管理、统计、密码重置
-│   ├── alembic/              # 数据库迁移
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/                 # React + TypeScript + Tailwind CSS 前端
-│   ├── src/
-│   │   ├── main.tsx          # 入口
-│   │   ├── App.tsx           # 路由定义
-│   │   ├── components/
-│   │   │   └── Layout.tsx    # 侧边栏导航 + 移动端底部导航
-│   │   ├── pages/
-│   │   │   ├── Login.tsx         # 登录页
-│   │   │   ├── Register.tsx      # 注册页
-│   │   │   ├── Dashboard.tsx     # 仪表盘（热力图、PR 卡片、统计）
-│   │   │   ├── WorkoutList.tsx   # 训练记录列表
-│   │   │   ├── WorkoutForm.tsx   # 新建/编辑训练
-│   │   │   ├── WorkoutDetail.tsx # 训练详情
-│   │   │   ├── Exercises.tsx     # 动作库
-│   │   │   ├── ProgressPage.tsx  # 进度图表（折线图）
-│   │   │   └── admin/
-│   │   │       ├── AdminDashboard.tsx  # 管理后台统计
-│   │   │       ├── AdminUsers.tsx      # 用户管理列表
-│   │   │       └── AdminUserDetail.tsx # 用户详情 + 重置密码
-│   │   ├── hooks/
-│   │   │   ├── useAuth.tsx   # 认证上下文
-│   │   │   └── useTheme.tsx  # 暗色/亮色主题
-│   │   ├── lib/
-│   │   │   └── api.ts        # API 客户端封装
-│   │   └── types/
-│   │       └── index.ts      # TypeScript 类型定义
-│   ├── package.json
-│   ├── tailwind.config.js
-│   ├── vite.config.ts
-│   └── Dockerfile
-├── docker-compose.yml        # 一键启动：db + backend + frontend
-└── .env.example              # 环境变量模板
-```
+一个全栈健身追踪应用，帮助用户记录训练、追踪进度、查看个人最佳记录。
 
 ---
 
-## 🚀 快速启动
-
-### 前置条件
-
-- [Docker](https://www.docker.com/) 和 Docker Compose 已安装
-
-### 一键启动
-
-```bash
-# 1. 克隆项目
-git clone <repo-url>
-cd strong-tracking
-
-# 2. 复制环境变量文件并修改配置
-cp .env.example .env
-# 编辑 .env，设置 SECRET_KEY 和 ADMIN_EMAIL
-
-# 3. 启动所有服务
-docker compose up -d --build
-```
-
-启动后，三个服务会自动运行：
-
-| 服务 | 地址 | 说明 |
-|------|------|------|
-| 前端 | `http://localhost:3000` | React 开发服务器 (Vite HMR) |
-| 后端 API | `http://localhost:8000` | FastAPI 服务 |
-| 数据库 | `localhost:5432` | PostgreSQL 15 |
-
-### 停止项目
-
-```bash
-# 停止容器（保留数据）
-docker compose down
-
-# 停止并删除所有数据
-docker compose down -v
-```
-
-### API 文档
-
-启动后端后，FastAPI 自动生成的交互式文档：
-
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
-
----
-
-## 👤 管理员配置
-
-系统通过环境变量 `ADMIN_EMAIL` 自动将指定邮箱的用户提升为管理员。
-
-### 配置方式
-
-在 `.env` 文件中设置（从 `.env.example` 复制）：
-
-```env
-ADMIN_EMAIL=your@email.com   # ← 改为你的邮箱
-```
-
-### 成为管理员
-
-1. 用配置的邮箱在前端注册账号（`http://localhost:3000/register`）
-2. **重启 backend 容器**（启动时会自动检测并设置 `is_admin = true`）：
-
-```bash
-docker compose restart backend
-```
-
-3. 重新登录后，侧边栏会出现 🛡️ **「管理后台」** 入口
-
----
-
-## 📖 功能模块
-
-### 👤 用户认证
-
-- **注册** — 邮箱 + 用户名 + 密码注册
-- **登录** — 邮箱 + 密码登录，返回 JWT Token
-- **Token** — 默认有效期 24 小时（可在 `.env` 中配置）
-
-### 📊 仪表盘
-
-首页提供：
-- 📅 **训练热力图** — 类似 GitHub 的一整年训练日历
-- 🔥 **连续打卡天数** / 最长连续记录
-- 🏆 **个人最佳记录** — 每个动作的最大重量，按日期展示
-
-### 🏋️ 训练记录
-
-- **新建训练** — 选择动作 + 组数 + 重量 + 次数 + 备注
-- **训练列表** — 按月份分组展示，支持分页
-- **训练详情** — 查看每组数据，支持编辑/删除
-
-### 📈 进度图表
-
-- 按动作选择，查看重量变化**折线图**
-- 显示最大重量（实线）和平均重量（虚线）
-- 数据摘要：训练次数、最大重量、最新重量、起步重量
-
-### 📚 动作库
-
-- 内置系统预设动作（按类别分组：胸部、背部、腿部、肩部、手臂、核心）
-- 支持**自定义动作**（添加/删除）
-- 搜索过滤器
-
-### 🛡️ 管理后台（仅管理员可见）
-
-- **系统概览** — 总用户数、总训练次数、本周新用户、本周活跃用户
-- **用户管理** — 分页列表，搜索，查看用户详情
-- **重置密码** — 管理员可修改任何用户的密码
-- **删除用户** — 删除用户及其所有训练数据（不能删自己）
-
----
-
-## 🛠️ 技术栈
+## 技术栈
 
 | 层级 | 技术 |
 |------|------|
-| **后端框架** | FastAPI (Python 3.12) |
-| **数据库** | PostgreSQL 15 |
-| **ORM** | SQLAlchemy 2.0 (异步) |
-| **数据库迁移** | Alembic |
-| **认证** | JWT (python-jose) + bcrypt |
+| **后端框架** | Spring Boot 3.4.1 (Java 21) |
+| **数据库** | SQLite (via Hibernate + SQLiteDialect) |
+| **ORM** | Spring Data JPA (Hibernate) |
+| **认证** | JWT (jjwt 0.12.6) + BCrypt |
+| **构建工具** | Maven |
 | **前端框架** | React 18 + TypeScript |
 | **构建工具** | Vite 5 |
-| **样式** | Tailwind CSS |
-| **图表** | Recharts (进度折线图) + react-calendar-heatmap (热力图) |
-| **日期处理** | date-fns |
+| **样式** | Tailwind CSS 3 |
+| **图表** | Recharts + react-calendar-heatmap |
 | **图标** | Lucide React |
 | **容器化** | Docker + Docker Compose |
 
 ---
 
-## 📡 API 接口一览
+## 项目结构
 
-### 认证 (`/api/auth`)
+```
+StrongTracking/
+├── backend/                          # Java Spring Boot 后端
+│   ├── src/main/java/com/strongtracking/
+│   │   ├── StrongTrackingApplication.java   # 应用入口
+│   │   ├── config/
+│   │   │   ├── AppConfig.java               # PasswordEncoder Bean
+│   │   │   ├── SecurityConfig.java          # Spring Security 配置
+│   │   │   └── JwtConfig.java               # JWT 配置属性
+│   │   ├── model/
+│   │   │   ├── User.java                    # 用户实体
+│   │   │   ├── Workout.java                 # 训练记录实体
+│   │   │   ├── Exercise.java                # 动作实体
+│   │   │   └── WorkoutSet.java              # 训练组实体
+│   │   ├── repository/                      # Spring Data JPA 仓库
+│   │   ├── service/
+│   │   │   ├── AuthService.java             # 认证逻辑
+│   │   │   ├── WorkoutService.java          # 训练 CRUD
+│   │   │   ├── ExerciseService.java         # 动作管理 + 预设种子
+│   │   │   ├── StatsService.java            # 统计数据
+│   │   │   ├── AdminService.java            # 管理功能
+│   │   │   └── AdminSeedService.java        # 管理员自动提升
+│   │   ├── controller/                      # REST 控制器
+│   │   ├── dto/                             # 请求/响应 DTO
+│   │   ├── security/
+│   │   │   ├── JwtTokenProvider.java        # JWT 令牌生成与验证
+│   │   │   ├── JwtAuthenticationFilter.java # 认证过滤器
+│   │   │   └── UserPrincipal.java           # UserDetails 实现
+│   │   └── exception/
+│   │       ├── ErrorResponse.java
+│   │       └── GlobalExceptionHandler.java
+│   ├── src/main/resources/
+│   │   └── application.yml                  # 应用配置
+│   ├── pom.xml
+│   ├── mvnw / mvnw.cmd                      # Maven Wrapper
+│   └── Dockerfile
+├── frontend/                               # React + TypeScript 前端
+│   ├── src/
+│   │   ├── App.tsx                          # 路由定义
+│   │   ├── main.tsx                         # 入口
+│   │   ├── components/
+│   │   │   └── Layout.tsx                   # 侧边栏导航 + 移动端底部导航
+│   │   ├── pages/
+│   │   │   ├── Login.tsx                    # 登录页
+│   │   │   ├── Register.tsx                 # 注册页
+│   │   │   ├── Dashboard.tsx                # 仪表盘
+│   │   │   ├── WorkoutList.tsx              # 训练列表
+│   │   │   ├── WorkoutForm.tsx              # 新建/编辑训练
+│   │   │   ├── WorkoutDetail.tsx            # 训练详情
+│   │   │   ├── Exercises.tsx                # 动作库
+│   │   │   ├── ProgressPage.tsx             # 进度图表
+│   │   │   └── admin/
+│   │   │       ├── AdminDashboard.tsx       # 管理后台统计
+│   │   │       ├── AdminUsers.tsx           # 用户管理
+│   │   │       └── AdminUserDetail.tsx      # 用户详情
+│   │   ├── hooks/
+│   │   │   ├── useAuth.tsx                  # 认证上下文
+│   │   │   └── useTheme.tsx                 # 暗色/亮色主题
+│   │   ├── lib/
+│   │   │   └── api.ts                       # API 客户端
+│   │   └── types/
+│   │       └── index.ts                     # TypeScript 类型
+│   ├── package.json
+│   ├── vite.config.ts                       # Vite + API 代理
+│   ├── tailwind.config.js
+│   └── Dockerfile
+├── data/                                   # SQLite 数据库文件
+│   └── strongtracking.db
+├── docker-compose.yml                      # 开发环境
+├── docker-compose.prod.yml                 # 生产环境
+└── .env.example                            # 环境变量模板
+```
 
-| 方法 | 路径 | 说明 | 需登录 |
-|------|------|------|--------|
-| POST | `/register` | 注册 | ❌ |
-| POST | `/login` | 登录 | ❌ |
-| GET | `/me` | 当前用户信息 | ✅ |
+---
 
-### 训练 (`/api/workouts`)
+### 服务地址
 
-| 方法 | 路径 | 说明 | 需登录 |
-|------|------|------|--------|
-| GET | `/` | 训练列表（分页） | ✅ |
-| GET | `/{id}` | 训练详情（含组数据） | ✅ |
-| POST | `/` | 创建训练 | ✅ |
-| PUT | `/{id}` | 更新训练 | ✅ |
-| DELETE | `/{id}` | 删除训练 | ✅ |
+| 服务 | 地址 | 说明 |
+|------|------|------|
+| 前端 | `http://localhost:3000` | Vite 开发服务器 |
+| 后端 API | `http://localhost:18735` | Spring Boot 服务 |
+| API 文档 | `http://localhost:18735/api/health` | 健康检查 |
 
-### 动作 (`/api/exercises`)
+---
 
-| 方法 | 路径 | 说明 | 需登录 |
-|------|------|------|--------|
-| GET | `/` | 动作列表 | ✅ |
-| POST | `/` | 创建自定义动作 | ✅ |
-| DELETE | `/{id}` | 删除自定义动作 | ✅ |
+## 功能模块
 
-### 统计 (`/api/stats`)
+### 用户认证
 
-| 方法 | 路径 | 说明 | 需登录 |
-|------|------|------|--------|
-| GET | `/progress/{exercise_id}` | 动作进度数据 | ✅ |
-| GET | `/heatmap` | 热力图数据 | ✅ |
-| GET | `/overview` | 概览统计 + PR | ✅ |
+- **注册** — 邮箱 + 用户名 + 密码注册
+- **登录** — 邮箱 + 密码登录，返回 JWT Token
+- **Token** — 默认有效期 24 小时（可在 `.env` 中配置）
 
-### 管理 (`/api/admin`) — **仅管理员**
+### 仪表盘
+
+首页展示:
+- 训练热力图（类似 GitHub 贡献日历）
+- 连续打卡天数 / 最长连续记录
+- 各动作个人最佳记录
+
+### 训练记录
+
+- 新建训练 — 选择动作、组数、重量、次数、备注
+- 训练列表 — 按月份分组展示，支持分页和日期筛选
+- 训练详情 — 查看每组数据，支持编辑/删除
+
+### 进度图表
+
+- 按动作查看重量变化折线图
+- 显示最大重量和平均重量
+- 数据摘要: 训练次数、最大重量、最新重量、起步重量
+
+### 动作库
+
+- 内置 10 个系统预设动作（胸部、背部、腿部、肩部、手臂、核心）
+- 支持添加自定义动作
+- 支持删除自定义动作（预设动作不可删除）
+
+### 管理后台（仅管理员可见）
+
+- 系统概览 — 总用户数、总训练次数、本周新用户、本周活跃用户
+- 用户管理 — 分页列表，搜索，查看用户详情
+- 重置密码 — 管理员可修改任何用户的密码
+- 删除用户 — 删除用户及其所有训练数据
+
+---
+
+## API 接口
+
+### 认证 `/api/auth`
+
+| 方法 | 路径 | 说明 | 认证 |
+|------|------|------|------|
+| POST | `/api/auth/register` | 注册 | 无 |
+| POST | `/api/auth/login` | 登录 | 无 |
+| GET | `/api/auth/me` | 获取当前用户 | Bearer Token |
+
+### 训练 `/api/workouts`
+
+| 方法 | 路径 | 说明 | 认证 |
+|------|------|------|------|
+| GET | `/api/workouts` | 训练列表（分页、日期筛选） | Bearer Token |
+| GET | `/api/workouts/{id}` | 训练详情 | Bearer Token |
+| POST | `/api/workouts` | 创建训练 | Bearer Token |
+| PUT | `/api/workouts/{id}` | 更新训练 | Bearer Token |
+| DELETE | `/api/workouts/{id}` | 删除训练 | Bearer Token |
+
+### 动作 `/api/exercises`
+
+| 方法 | 路径 | 说明 | 认证 |
+|------|------|------|------|
+| GET | `/api/exercises` | 动作列表（预设 + 自定义） | Bearer Token |
+| POST | `/api/exercises` | 创建自定义动作 | Bearer Token |
+| DELETE | `/api/exercises/{id}` | 删除自定义动作 | Bearer Token |
+
+### 统计 `/api/stats`
+
+| 方法 | 路径 | 说明 | 认证 |
+|------|------|------|------|
+| GET | `/api/stats/progress/{exerciseId}` | 动作进度数据 | Bearer Token |
+| GET | `/api/stats/heatmap` | 热力图数据 | Bearer Token |
+| GET | `/api/stats/overview` | 概览统计 + PR | Bearer Token |
+
+### 管理 `/api/admin`（仅管理员）
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| GET | `/stats` | 系统统计 |
-| GET | `/users` | 用户列表（分页） |
-| GET | `/users/{id}` | 用户详情 |
-| PUT | `/users/{id}/password` | 重置用户密码 |
-| DELETE | `/users/{id}` | 删除用户 |
+| GET | `/api/admin/stats` | 系统统计 |
+| GET | `/api/admin/users` | 用户列表（分页、搜索） |
+| GET | `/api/admin/users/{id}` | 用户详情 |
+| PUT | `/api/admin/users/{id}/password` | 重置密码 |
+| DELETE | `/api/admin/users/{id}` | 删除用户 |
 
 ### 健康检查
 
@@ -264,51 +205,39 @@ docker compose restart backend
 
 ---
 
-## 🔧 开发
+## 本地开发与调试
 
-### 本地开发（不使用 Docker）
+### 后端
 
-**后端：**
 ```bash
 cd backend
-pip install -r requirements.txt
-alembic upgrade head
-uvicorn app.main:app --reload --port 8000
+
+# 使用 Maven Wrapper 启动
+# 使用maven3.0版本以上的都可以，settings里下载源换成阿里云或者其他都可以
+./mvnw spring-boot:run
+
+# 或先编译再运行 jdk用21的 
+./mvnw clean package -DskipTests
+java -jar target/strongtracking-3.0.0.jar
 ```
 
-**前端：**
+后端默认运行在 `http://localhost:18735`。
+
+### 前端 node版本用20.1以上
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 数据库迁移
+前端开发服务器默认运行在 `http://localhost:3000`，API 请求会自动代理到 `http://localhost:18735`。
+为啥是18735，我随便设置的，可以在application.yml里改下就行
 
-```bash
-# 进入后端容器
-docker compose exec backend sh
+### 数据库
 
-# 创建新迁移
-alembic revision --autogenerate -m "describe change"
+我直接使用了sqllite，这边直接把data目录下的db文件打开即是库了，也没有几个表说是。
 
-# 应用迁移
-alembic upgrade head
-```
-
----
-
-## 🔑 环境变量
-
-参考 `.env.example`：
-
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `DATABASE_URL` | PostgreSQL 连接串 | `postgresql+asyncpg://fituser:fitpass@localhost:5432/fitdb` |
-| `SECRET_KEY` | JWT 签名密钥 | `change-me` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token 过期时间（分钟） | `1440`（24 小时） |
-| `ADMIN_EMAIL` | 自动提升为管理员的邮箱 | 空 |
-
----
-
-欢迎各位进行品评指正
+## 总结
+需要开发 则下载maven、jdk、node这些，最好搭一个数据库工具来编辑db文件，或者idea内也可以打开db文件。
+需要运行服务 下载jdk即可，jdk11后我记得不分jre了，所以直接安排jdk就行。
