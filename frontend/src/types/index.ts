@@ -98,3 +98,38 @@ export interface AdminStats {
   new_users_this_week: number;
   active_users_this_week: number;
 }
+
+// Forum
+export interface ForumAuthor {
+  id: string;
+  username: string;
+}
+
+export interface ForumPostListItem {
+  id: string;
+  title: string;
+  content_preview: string;
+  author: ForumAuthor;
+  created_at: string;
+  comment_count: number;
+  like_count: number;
+}
+
+export interface ForumComment {
+  id: string;
+  content: string;
+  author: ForumAuthor;
+  created_at: string;
+}
+
+export interface ForumPost {
+  id: string;
+  title: string;
+  content: string;
+  author: ForumAuthor;
+  created_at: string;
+  comment_count: number;
+  like_count: number;
+  liked_by_current_user: boolean;
+  comments: ForumComment[];
+}

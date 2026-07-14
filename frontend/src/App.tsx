@@ -9,6 +9,9 @@ import WorkoutForm from './pages/WorkoutForm';
 import WorkoutDetail from './pages/WorkoutDetail';
 import Exercises from './pages/Exercises';
 import ProgressPage from './pages/ProgressPage';
+import ForumList from './pages/ForumList';
+import ForumPostDetail from './pages/ForumPostDetail';
+import ForumNewPost from './pages/ForumNewPost';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminUserDetail from './pages/admin/AdminUserDetail';
@@ -49,6 +52,9 @@ export default function App() {
         <Route path="workouts/:id/edit" element={<WorkoutForm />} />
         <Route path="exercises" element={<Exercises />} />
         <Route path="stats" element={<ProgressPage />} />
+        <Route path="forum" element={<ForumList />} />
+        <Route path="forum/new" element={<ForumNewPost />} />
+        <Route path="forum/:id" element={<ForumPostDetail />} />
         <Route path="admin" element={<AdminRoute><Outlet /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />

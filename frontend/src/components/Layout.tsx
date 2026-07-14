@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Dumbbell, LayoutDashboard, ClipboardList, BarChart3, Library, LogOut, Moon, Sun, Shield } from 'lucide-react';
+import { Dumbbell, LayoutDashboard, ClipboardList, BarChart3, Library, LogOut, Moon, Sun, Shield, MessageSquare } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 import { useMemo } from 'react';
@@ -9,6 +9,7 @@ const userNavItems = [
   { to: '/workouts', icon: ClipboardList, label: '训练记录' },
   { to: '/stats', icon: BarChart3, label: '进度图表' },
   { to: '/exercises', icon: Library, label: '动作库' },
+  { to: '/forum', icon: MessageSquare, label: '论坛' },
 ];
 
 export default function Layout() {

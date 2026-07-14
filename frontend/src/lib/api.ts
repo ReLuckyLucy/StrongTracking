@@ -76,4 +76,24 @@ export const api = {
   deleteUser: (id: string) => request(`/admin/users/${id}`, { method: 'DELETE' }),
   resetUserPassword: (id: string, password: string) =>
     request(`/admin/users/${id}/password`, { method: 'PUT', body: JSON.stringify({ password }) }),
+
+  // Forum
+  listForumPosts: (params?: { page?: number; per_page?: number }) => {
+    const search = new URLSearchParams();
+    if (params?.page) search.set('page', String(params.page));
+    if (params?.per_page) search.set('per_page', String(params.per_page));
+    const qs = search.toString();
+    return request(`/forum/posts${qs ? `?${qs}` : ''}`);
+  },
+  getForumPost: (id: string) => request(`/forum/posts/${id}`),
+  createForumPost: (body: { title: string; content: string }) =>
+    request('/forum/posts', { method: 'POST', body: JSON.stringify(body) }),
+  deleteForumPost: (id: string) =>
+    request(`/forum/posts/${id}`, { method: 'DELETE' }),
+  addForumComment: (postId: string, body: { content: string }) =>
+    request(`/forum/posts/${postId}/comments`, { method: 'POST', body: JSON.stringify(body) }),
+  deleteForumComment: (id: string) =>
+    request(`/forum/comments/${id}`, { method: 'DELETE' }),
+  toggleForumLike: (postId: string) =>
+    request(`/forum/posts/${postId}/like`, { method: 'POST' }),
 };
