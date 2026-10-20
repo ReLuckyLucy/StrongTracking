@@ -12,6 +12,7 @@ import ProgressPage from './pages/ProgressPage';
 import ForumList from './pages/ForumList';
 import ForumPostDetail from './pages/ForumPostDetail';
 import ForumNewPost from './pages/ForumNewPost';
+import LeaderboardPage from './pages/Leaderboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminUserDetail from './pages/admin/AdminUserDetail';
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="forum" element={<ForumList />} />
         <Route path="forum/new" element={<ForumNewPost />} />
         <Route path="forum/:id" element={<ForumPostDetail />} />
+        <Route path="leaderboard" element={<LeaderboardPage />} />
         <Route path="admin" element={<AdminRoute><Outlet /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />

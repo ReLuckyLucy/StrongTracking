@@ -96,4 +96,14 @@ export const api = {
     request(`/forum/comments/${id}`, { method: 'DELETE' }),
   toggleForumLike: (postId: string) =>
     request(`/forum/posts/${postId}/like`, { method: 'POST' }),
+
+  // Leaderboard
+  leaderboard: (params?: { metric?: string; period?: string; exercise_id?: string }) => {
+    const search = new URLSearchParams();
+    if (params?.metric) search.set('metric', params.metric);
+    if (params?.period) search.set('period', params.period);
+    if (params?.exercise_id) search.set('exerciseId', params.exercise_id);
+    const qs = search.toString();
+    return request(`/leaderboard${qs ? `?${qs}` : ''}`);
+  },
 };

@@ -37,9 +37,11 @@ public class ForumPost {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
+    @Builder.Default
     private List<ForumComment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<ForumLike> likes = new ArrayList<>();
 
     @PrePersist

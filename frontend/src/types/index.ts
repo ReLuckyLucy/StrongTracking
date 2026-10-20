@@ -133,3 +133,28 @@ export interface ForumPost {
   liked_by_current_user: boolean;
   comments: ForumComment[];
 }
+
+// Leaderboard
+export type LeaderboardMetric = 'workouts' | 'volume' | 'streak' | 'weight';
+export type LeaderboardPeriod = 'all' | 'month' | 'week';
+
+export interface LeaderboardEntry {
+  rank: number;
+  user_id: string;
+  username: string;
+  workout_count: number;
+  total_volume: number;
+  max_weight: number;
+  current_streak: number;
+  longest_streak: number;
+}
+
+export interface Leaderboard {
+  metric: LeaderboardMetric;
+  period: LeaderboardPeriod;
+  exercise_id: string | null;
+  exercise_name: string | null;
+  total_participants: number;
+  my_entry: LeaderboardEntry | null;
+  entries: LeaderboardEntry[];
+}

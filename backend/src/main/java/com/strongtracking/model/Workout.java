@@ -41,6 +41,7 @@ public class Workout {
 
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("setNumber ASC")
+    @Builder.Default
     private List<WorkoutSet> sets = new ArrayList<>();
 
     @PrePersist
